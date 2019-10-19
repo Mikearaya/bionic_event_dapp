@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import './ERC20.sol';
+import './erc20.sol';
 
 contract Event is ERC20 {
     
@@ -10,9 +10,9 @@ contract Event is ERC20 {
     uint256 public available;
     string location;
     uint ticketPrice;
-    address public owner;
+    address payable public  owner;
 
-    constructor(address _organizer, string memory _name, uint _start, uint _end,  uint supply, uint _ticketPrice) public {
+    constructor(address payable _organizer, string memory _name, uint _start, uint _end,  uint supply, uint _ticketPrice) public {
         require(now < _start);
         require(_start > _end);
         name = _name;
@@ -27,8 +27,10 @@ contract Event is ERC20 {
 
     function purchaseTicket(uint quantity) public payable {
         require(quantity <= available, "Required amount of ticket is not available for sale");
-        require(msg.value >= ticketPrice.mul(quantity));
+        require(msg.value >= ticketPrice.mul(quantity), "not enough money sent");
+        _approve(owner, msg.sender, quantity);
         transferFrom(owner, msg.sender, quantity );
+        owner.transfer(msg.value);
         available = available.sub(quantity);        
     }
 

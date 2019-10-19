@@ -4023,7 +4023,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.16",
-  "updatedAt": "2019-10-19T10:48:26.491Z",
+  "updatedAt": "2019-10-19T14:54:45.544Z",
   "devdoc": {
     "methods": {
       "allowance(address,address)": {
