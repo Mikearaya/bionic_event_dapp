@@ -1,8 +1,7 @@
 pragma solidity ^0.5.0;
+import "./ERC721Full.sol";
 
-import './erc20.sol';
-
-contract Event is ERC20 {
+contract Event is ERC721Full {
     
     string public name;
     uint256 public startDate;
@@ -12,32 +11,23 @@ contract Event is ERC20 {
     uint ticketPrice;
     address payable public  owner;
 
-    constructor(address payable _organizer, string memory _name, uint _start, uint _end,  uint supply, uint _ticketPrice) public {
-        require(now < _start);
-        require(_start > _end);
+    constructor(address payable _organizer, string memory _name, uint _start, uint _end,  uint supply, uint _ticketPrice) ERC721Full(_name, "TKT") public {
         name = _name;
         startDate = _start;
         endDate = _end;
         ticketPrice = _ticketPrice;
         available = supply;
         owner = _organizer;
-        _mint(_organizer, supply);
     }
 
 
     function purchaseTicket(uint quantity) public payable {
-        require(quantity <= available, "Required amount of ticket is not available for sale");
         require(msg.value >= ticketPrice.mul(quantity), "not enough money sent");
-        _approve(owner, msg.sender, quantity);
-        transferFrom(owner, msg.sender, quantity );
-        owner.transfer(msg.value);
-        available = available.sub(quantity);        
+        _mint(msg.sender,now);
+        owner.transfer(msg.value);      
     }
 
 
-    function transferTicket(address reciepent, uint quantity) public {
-        require(balanceOf(msg.sender) >= quantity, "you dont have required ticket quantity to transfer");
-        transfer(reciepent, quantity);
-    }
+
 
 }
