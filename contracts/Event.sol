@@ -38,6 +38,16 @@ contract Event is ERC721Full {
         return _tokensOfOwner(_owner);
     }
 
+
+    function isTicketValid(address _owner, uint _tokenId)public returns(bool) {
+        if(ownerOf(_tokenId) == _owner) {
+            _burn(_tokenId);
+            return true;
+        }  else {
+            return false;
+        }
+    }
+
     function allowTransfer() public {
         allowTransfer = !allowTransfer;
     }
