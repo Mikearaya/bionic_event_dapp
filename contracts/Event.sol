@@ -10,6 +10,7 @@ contract Event is ERC721Full {
     string location;
     uint ticketPrice;
     address payable public  owner;
+    bool canceled;
     bool public allTransfer;
 
     constructor(address payable _organizer, string memory _name, uint _start, uint _end,  uint supply, uint _ticketPrice) ERC721Full(_name, "TKT") public {
@@ -50,6 +51,27 @@ contract Event is ERC721Full {
 
     function allowTransfer() public {
         allowTransfer = !allowTransfer;
+    }
+
+    function cancelEvent() public {
+      require(now > startDate);
+      canceled = true;
+    }
+
+    function collectPayment() public {
+        require(msg.sender == owner);
+        require(now > endDate && !canceled);
+        owner.transfer(address(this).balance);
+    }
+    
+    function getRefund() public {
+        require(address(0) != msg.sender);
+        uint[] memory tokens = _tokensOfOwner(msg.sender);
+        for(uint8 i = 0; i < tokens.length; i++) {
+            _burn(tokens[i]);    
+        }
+        msg.sender.transfer(ticketPrice.mul(tokens.length));
+        
     }
 
 }
