@@ -27,6 +27,7 @@ contract Event is ERC721Full {
 
 
     function purchaseTicket(uint quantity) public payable {
+        require(available -totalSupply >= quantity, "not enough ticket quantity available!!!");
         require(msg.value >= ticketPrice.mul(quantity), "not enough money sent");
         require(quantity <= MAX_PURCHASE, "can not purchase more than 5 ticket at once");
         for(uint8 i = 0; i < quantity; i++) {
@@ -66,7 +67,7 @@ contract Event is ERC721Full {
     
     function getRefund() public {
         require(address(0) != msg.sender, "invalid address provided");
-        require(canceled, "event is only available for cacanceled events");
+        require(canceled, "refund is only available for cacanceled events");
         uint[] memory tokens = _tokensOfOwner(msg.sender);
         
         require(tokens.length > 0, "no tokens found under the given user");
@@ -78,7 +79,7 @@ contract Event is ERC721Full {
     }
     
       modifier onlyOwner {
-        require(msg.sender == owner, "only event owner has the right to collect payment");
+        require(msg.sender == owner, "only event owner is allowed to perform this action");
         _;
     }
 
