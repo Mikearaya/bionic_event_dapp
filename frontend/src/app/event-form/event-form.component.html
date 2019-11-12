@@ -1,3 +1,94 @@
-<p>
-  event-form works!
-</p>
+<form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="eventname">Event Name</label>
+          <input
+            type="text"
+            formControlName="eventName"
+            class="form-control"
+            id="eventname"
+            placeholder="Event Name"
+          />
+          <div *ngIf="getControl('eventName').errors" class="text-danger">
+            <div *ngIf="getControl('eventName').errors['required']">
+              Event name is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label for="Location">Location</label>
+          <input
+            type="text"
+            class="form-control"
+            id="Location"
+            placeholder="Location"
+          />
+          <div *ngIf="getControl('location').errors" class="text-danger">
+            <div *ngIf="getControl('location').errors['required']">
+              Location is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="startDate">Start Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="startDate"
+            placeholder="Start Date"
+          />
+          <div *ngIf="getControl('startDate').errors" class="text-danger">
+            <div *ngIf="getControl('startDate').errors['required']">
+              Event start date is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="endDate">End Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="endDate"
+            placeholder="End Date"
+          />
+          <div *ngIf="getControl('endDate').errors" class="text-danger">
+            <div *ngIf="getControl('endDate').errors['required']">
+              Event name is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            class="form-control"
+            id="description"
+            placeholder="Description"
+          >
+          </textarea>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="image">
+          <input type="file" class="image-input" id="image" />
+        </div>
+      </div>
+    </div>
+    <button
+      type="submit"
+      [disabled]="eventForm.invalid"
+      class="btn btn-success btn-lg btn-block mt-5 mb-3"
+    >
+      Create Event
+    </button>
+  </div>
+</form>
