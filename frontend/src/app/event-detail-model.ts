@@ -3,6 +3,6 @@ export class EventDetailModel {
   name: string;
   location: string;
   description: string;
-  image: string;
+  image?: string;
   ticketId: string[];
 }
