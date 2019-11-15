@@ -51,13 +51,14 @@
     "typescript": "~3.1.1"
   },
   "browser": {
-        "net": false,
+    "net": false,
     "path": false,
     "stream": false,
     "crypto": false,
     "http": false,
     "https": false,
     "tls": false,
-    "os": false
+    "os": false,
+    "scrypt-shim": false
   }
 }

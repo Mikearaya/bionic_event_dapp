@@ -8,6 +8,7 @@ import { EventDetailComponent } from "./event-detail/event-detail.component";
 import { EventFormComponent } from "./event-form/event-form.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
+import { EthereumModule } from "./ethereum/ethereum.module";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HttpClientModule } from "@angular/common/http";
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    EthereumModule,
     ReactiveFormsModule
   ],
   providers: [],
