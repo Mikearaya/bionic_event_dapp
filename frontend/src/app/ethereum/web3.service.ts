@@ -10,6 +10,8 @@ declare var window: any;
 })
 export class Web3Service {
   web3: any;
+  account: string;
+  accountsList: any[];
 
   constructor() {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
@@ -29,5 +31,25 @@ export class Web3Service {
         new Web3.providers.HttpProvider("http://localhost:8545")
       );
     }
+
+    this.setAccount();
+  }
+
+  setAccount(): void {
+    this.web3.eth.getAccounts((err, accs) => {
+      if (err != null) {
+        alert("There was an error fetching your accounts.");
+        return;
+      }
+
+      if (accs.length === 0) {
+        alert(
+          "You are not connected to an Ethereum client. You can still browse the data, but you will not be able to perform transactions."
+        );
+        return;
+      }
+      this.accountsList = accs;
+      this.account = this.accountsList[0];
+    });
   }
 }

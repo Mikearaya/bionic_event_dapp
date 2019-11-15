@@ -23,32 +23,9 @@ export class AppComponent implements OnInit {
     this.Coin.setProvider(this.ethereumApi.web3.currentProvider);
     const deployedFac = await this.Coin.deployed();
 
-    await this.ethereumApi.web3.eth.getAccounts((err, accs) => {
-      if (err != null) {
-        alert("There was an error fetching your accounts.");
-        return;
-      }
+    this.account = this.ethereumApi.account;
 
-      if (accs.length === 0) {
-        alert(
-          "You are not connected to an Ethereum client. You can still browse the data, but you will not be able to perform transactions."
-        );
-        return;
-      }
-      this.accounts = accs;
-      this.account = this.accounts[0];
-    });
-
-    const eventsList = await deployedFac.createEvent(
-      "First Event",
-      666666666666,
-      77777777777777,
-      1000,
-      1,
-      { from: this.account }
-    );
-
-    console.log(eventsList);
+    const eventsList = await deployedFac.getDeployedEvents();
   }
 
   callEventFactory(): void {
