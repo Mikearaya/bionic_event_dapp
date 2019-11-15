@@ -1,4 +1,5 @@
 <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+  {{ eventForm.value | json }}
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -22,6 +23,7 @@
         <div class="form-group">
           <label for="Location">Location</label>
           <input
+            formControlName="location"
             type="text"
             class="form-control"
             id="Location"
@@ -39,6 +41,7 @@
           <label for="startDate">Start Date</label>
           <input
             type="date"
+            formControlName="startDate"
             class="form-control"
             id="startDate"
             placeholder="Start Date"
@@ -54,6 +57,7 @@
         <div class="form-group">
           <label for="endDate">End Date</label>
           <input
+            formControlName="endDate"
             type="date"
             class="form-control"
             id="endDate"
@@ -71,6 +75,7 @@
           <label for="description">Description</label>
           <textarea
             class="form-control"
+            formControlName="description"
             id="description"
             placeholder="Description"
           >
@@ -79,7 +84,12 @@
       </div>
       <div class="col-12">
         <div class="image">
-          <input type="file" class="image-input" id="image" />
+          <input
+            type="file"
+            formControlName="image"
+            class="image-input"
+            id="image"
+          />
         </div>
       </div>
     </div>

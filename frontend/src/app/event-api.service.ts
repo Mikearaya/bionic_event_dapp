@@ -37,9 +37,10 @@ export class EventApiService {
     return eventsList;
   }
 
-  creatEvent(event: EventModel): Observable<string> {
-    const deployedFactory = this.Event.deployed();
-    const eventsList = deployedFactory.createEvent(
+  async creatEvent(event: EventModel) {
+    this.deployedFactory = await this.EventFactory.deployed();
+
+    const eventsList = this.deployedFactory.createEvent(
       event.name,
       event.startDate,
       event.endDate,
@@ -47,6 +48,6 @@ export class EventApiService {
       event.ticketPrice,
       { from: this.ethereumApi.account }
     );
-    return of(eventsList);
+    return eventsList;
   }
 }
