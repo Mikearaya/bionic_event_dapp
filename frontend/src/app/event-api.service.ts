@@ -27,19 +27,40 @@ export class EventApiService {
 
   async getEventsList() {
     this.deployedFactory = await this.EventFactory.deployed();
-    const eventsList = await this.deployedFactory.getDeployedEvents();
-    return eventsList;
+
+    const log = await this.deployedFactory.getPastEvents("eventCreated", {
+      fromBlock: 0,
+      toBlock: "latest"
+    });
+    console.log(log);
+    const event: any[] = [];
+    log.forEach(element => {
+      console.log(element);
+      event.push({
+        Id: element.returnValues._address,
+        name: element.returnValues._name,
+        ticketPrice: element.returnValues._ticketPrice,
+        location: element.returnValues.location,
+        startDate: element.returnValues.startDate,
+        endDate: element.returnValues.endDate
+      });
+    });
+
+    return event;
   }
 
   async creatEvent(event: EventModel) {
     this.deployedFactory = await this.EventFactory.deployed();
-
-    const eventsList = this.deployedFactory.createEvent(
+    console.log(event);
+    console.log(this.ethereumApi.account);
+    const eventsList = await this.deployedFactory.createEvent(
       event.name,
       event.startDate,
       event.endDate,
       event.availableTickets,
       event.ticketPrice,
+      event.description,
+      event.location,
       { from: this.ethereumApi.account }
     );
     return eventsList;
@@ -53,7 +74,7 @@ export class EventApiService {
   async purchaseTicket(eventId: string, quantity: number) {
     const val = this.ethereumApi.web3.utils.toWei("2", "ether");
     const event = await this.Event.at(eventId);
-
+    alert(this.ethereumApi.account);
     await event.purchaseTicket(2, {
       from: this.ethereumApi.account,
       value: val

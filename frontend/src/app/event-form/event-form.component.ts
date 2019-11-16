@@ -46,7 +46,7 @@ export class EventFormComponent implements OnInit {
       location: this.getControl("location").value,
       image: this.getControl("image").value,
       availableTickets: 100,
-      description: "hehehehehhhehe",
+      description: "hehehhhehe",
       ticketPrice: 1
     });
   }

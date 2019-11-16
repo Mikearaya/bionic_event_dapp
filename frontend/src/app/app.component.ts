@@ -16,8 +16,9 @@ export class AppComponent implements OnInit {
 
   constructor(private ethereumApi: Web3Service) {}
 
-  ngOnInit() {
-    this.account = this.ethereumApi.account;
+  async ngOnInit() {
+    this.account = await this.ethereumApi.account;
+    console.log(this.account);
   }
 
   callEventFactory(): void {}

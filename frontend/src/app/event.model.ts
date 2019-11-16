@@ -4,8 +4,8 @@ export class EventModel {
   location: string;
   startDate: number;
   endDate: number;
-  description: string;
+  description?: string;
   ticketPrice: number;
-  availableTickets: number;
-  image: string;
+  availableTickets?: number;
+  image?: string;
 }

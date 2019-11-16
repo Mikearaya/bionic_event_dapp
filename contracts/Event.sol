@@ -8,20 +8,31 @@ contract Event is ERC721Full {
     uint256 private ticketId;
     uint256 public endDate;
     uint256 public available;
+    string public location;
     uint8 private MAX_PURCHASE = 5;
-    string location;
+    string public  description;
     bool canceled;
-    uint ticketPrice;
+    uint public ticketPrice;
     address payable public  owner;
 
-    constructor(address payable _organizer, string memory _name, uint _start, uint _end,  uint supply, uint _ticketPrice) ERC721Full(_name, "TKT") public {
+    constructor(address payable _organizer, 
+    string memory _name, 
+    uint _start, 
+    uint _end,
+    string memory _description,  
+    string memory _location,
+    uint supply, 
+    uint _ticketPrice
+    ) ERC721Full(_name, "TKT") public {
 
         name = _name;
         startDate = _start;
         endDate = _end;
         ticketPrice = _ticketPrice;
         available = supply;
+        description = _description;
         owner = _organizer;
+        location = _location;
 
     }
 

@@ -51,7 +51,6 @@ export class Web3Service {
       }
       this.accountsList = accs;
       this.account = this.accountsList[0];
-      console.log(this.account);
     });
   }
 }
