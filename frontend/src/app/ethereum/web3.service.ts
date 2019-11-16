@@ -4,6 +4,7 @@ const Web3 = require("web3");
 import { Injectable } from "@angular/core";
 
 declare var window: any;
+declare var ethereum: any;
 
 @Injectable({
   providedIn: "root"
@@ -50,6 +51,7 @@ export class Web3Service {
       }
       this.accountsList = accs;
       this.account = this.accountsList[0];
+      console.log(this.account);
     });
   }
 }

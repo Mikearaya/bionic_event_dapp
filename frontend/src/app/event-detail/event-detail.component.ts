@@ -10,6 +10,7 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class EventDetailComponent implements OnInit {
   eventDetail: EventDetailModel;
+  userTickets = [];
   private eventId: string;
 
   constructor(
@@ -19,13 +20,16 @@ export class EventDetailComponent implements OnInit {
     this.eventDetail = new EventDetailModel();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.eventId = this.activatedRoute.snapshot.paramMap.get("eventId");
 
     if (this.eventId) {
-      this.eventApi
-        .getEventById(this.eventId)
-        .subscribe((event: EventDetailModel) => (this.eventDetail = event));
+      const detail = await this.eventApi.getEventById(this.eventId);
+      console.log(detail);
+      this.eventDetail.name = await detail.name();
+      this.eventDetail.ticketPrice = await detail.available();
+      this.userTickets = await this.eventApi.getUserTickets(this.eventId);
+      console.log(this.userTickets);
     }
   }
 
@@ -33,7 +37,7 @@ export class EventDetailComponent implements OnInit {
     alert("inside get refund");
   }
 
-  getTicket(): void {
-    alert("inside get ticket");
+  async getTicket() {
+    await this.eventApi.purchaseTicket(this.eventId, 3);
   }
 }

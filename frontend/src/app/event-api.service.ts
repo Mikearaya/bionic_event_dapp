@@ -1,8 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable, of } from "rxjs";
 import { EventModel } from "./event.model";
-import { EventDetailModel } from "./event-detail-model";
 import { Web3Service } from "./ethereum/web3.service";
 declare var require: any;
 const contract = require("truffle-contract");
@@ -18,17 +15,14 @@ export class EventApiService {
   Event = contract(eventArtifact);
 
   private deployedFactory;
-  private deployedEvent;
 
   constructor(private ethereumApi: Web3Service) {
     this.EventFactory.setProvider(this.ethereumApi.web3.currentProvider);
     this.Event.setProvider(this.ethereumApi.web3.currentProvider);
   }
 
-  getEventById(id: string): Observable<EventDetailModel> {
-    const event = contract(eventArtifact);
-    const deployedEvent = event.at(id);
-    return of(deployedEvent);
+  async getEventById(id: string) {
+    return await this.Event.at(id);
   }
 
   async getEventsList() {
@@ -49,5 +43,20 @@ export class EventApiService {
       { from: this.ethereumApi.account }
     );
     return eventsList;
+  }
+
+  async getUserTickets(eventId: string) {
+    const event = await this.Event.at(eventId);
+    return await event.getOwnersTicket(this.ethereumApi.account);
+  }
+
+  async purchaseTicket(eventId: string, quantity: number) {
+    const val = this.ethereumApi.web3.utils.toWei("2", "ether");
+    const event = await this.Event.at(eventId);
+
+    await event.purchaseTicket(2, {
+      from: this.ethereumApi.account,
+      value: val
+    });
   }
 }

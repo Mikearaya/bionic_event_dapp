@@ -7,7 +7,7 @@ import { EventApiService } from "../event-api.service";
   styleUrls: ["./events-list.component.css"]
 })
 export class EventsListComponent implements OnInit {
-  eventsList: string[];
+  eventsList: string[] = [];
   constructor(private eventApi: EventApiService) {}
 
   async ngOnInit() {

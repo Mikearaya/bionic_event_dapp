@@ -3,6 +3,9 @@ export class EventDetailModel {
   name: string;
   location: string;
   description: string;
+  startDate: string;
+  endDate: string;
+  ticketPrice: string;
   image?: string;
-  ticketId: string[];
+  ticketId: string[] = [];
 }

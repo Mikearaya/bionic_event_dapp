@@ -11,25 +11,14 @@ const eventFactoryArtifacts = require("../../../build/contracts/EventFactory.jso
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
-  Coin = contract(eventFactoryArtifacts);
-  coinInstance: any;
-
   account: any;
   accounts: any;
 
   constructor(private ethereumApi: Web3Service) {}
 
-  async ngOnInit() {
-    this.Coin.setProvider(this.ethereumApi.web3.currentProvider);
-    const deployedFac = await this.Coin.deployed();
-
+  ngOnInit() {
     this.account = this.ethereumApi.account;
-
-    const eventsList = await deployedFac.getDeployedEvents();
   }
 
-  callEventFactory(): void {
-    const c = this.Coin.deployed();
-    alert(JSON.stringify(c));
-  }
+  callEventFactory(): void {}
 }

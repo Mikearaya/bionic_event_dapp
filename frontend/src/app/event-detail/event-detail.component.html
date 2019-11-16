@@ -27,11 +27,11 @@
           <div
             class="alert alert-info"
             role="alert"
-            *ngIf="!eventDetail.ticketId.length"
+            *ngIf="!userTickets.length"
           >
             No Tickets Purchase For Event
           </div>
-          <ul class="list-group container" *ngIf="eventDetail.ticketId.length">
+          <ul class="list-group container" *ngIf="userTickets.length">
             <li
               class="list-group-item d-flex justify-content-between align-items-center"
               *ngFor="
