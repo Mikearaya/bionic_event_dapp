@@ -30,7 +30,9 @@ export class EventFormComponent implements OnInit {
       description: "",
       startDate: ["", Validators.required],
       endDate: ["", Validators.required],
-      location: ["", Validators.required]
+      location: ["", Validators.required],
+      availableTicket: [1, Validators.required],
+      ticketPrice: ["", Validators.required]
     });
   }
 
@@ -45,9 +47,9 @@ export class EventFormComponent implements OnInit {
       endDate: toTimestamp(this.getControl("endDate").value),
       location: this.getControl("location").value,
       image: this.getControl("image").value,
-      availableTickets: 100,
-      description: "hehehhhehe",
-      ticketPrice: 1
+      availableTickets: this.getControl("availableTicket").value,
+      description: this.getControl("description").value,
+      ticketPrice: this.getControl("ticketPrice").value
     });
   }
 }

@@ -9,9 +9,56 @@
           <p class="card-text">
             {{ eventDetail.description }}
           </p>
-          <button (click)="getTicket()" href="#" class="btn btn-primary">
-            Get Ticket
-          </button>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-3">
+                Start Date
+              </div>
+              <div class="col-3">
+                {{ eventDetail.startDate }}
+              </div>
+              <div class="col-3">
+                End date
+              </div>
+              <div class="col-3">{{ eventDetail.endDate }}</div>
+              <div class="col-3">
+                Location
+              </div>
+              <div class="col-3">
+                {{ eventDetail.location }}
+              </div>
+              <div class="col-3">
+                Ticket price
+              </div>
+              <div class="col-3">{{ eventDetail.ticketPrice }} Ether</div>
+            </div>
+          </div>
+
+          <form [formGroup]="bookingForm" class="mt-5" (ngSubmit)="getTicket()">
+            <div class="row">
+              <input
+                type="number"
+                #quantity
+                name="ticketQuantity"
+                id="ticketQuantity"
+                formControlName="quantity"
+                class="form-control col-2"
+                placeholder="Quantity"
+                min="1"
+                max="5"
+              />
+
+              <button
+                (click)="getTicket()"
+                href="#"
+                class="btn btn-success col-10"
+                [disabled]="!quantity"
+              >
+                Get Ticket
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

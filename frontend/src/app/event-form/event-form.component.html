@@ -38,6 +38,42 @@
       </div>
       <div class="col-6">
         <div class="form-group">
+          <label for="availableTicket">Total Ticket</label>
+          <input
+            formControlName="availableTicket"
+            type="number"
+            min="1"
+            class="form-control"
+            id="availableTicket"
+            placeholder="Total Ticket"
+          />
+          <div *ngIf="getControl('availableTicket').errors" class="text-danger">
+            <div *ngIf="getControl('availableTicket').errors['required']">
+              Available tickets is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="ticketPrice">Ticket price</label>
+          <input
+            formControlName="ticketPrice"
+            type="number"
+            min="1"
+            class="form-control"
+            id="ticketPrice"
+            placeholder="Ticket price"
+          />
+          <div *ngIf="getControl('ticketPrice').errors" class="text-danger">
+            <div *ngIf="getControl('ticketPrice').errors['required']">
+              Ticket price is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
           <label for="startDate">Start Date</label>
           <input
             type="date"
