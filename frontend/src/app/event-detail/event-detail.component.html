@@ -52,6 +52,7 @@
               <button
                 (click)="getTicket()"
                 href="#"
+                type="submit"
                 class="btn btn-success col-10"
                 [disabled]="!quantity"
               >
@@ -87,7 +88,7 @@
                 let last = last
               "
             >
-              {{ ticket }}
+              {{ ticket | number }}
               <button
                 (click)="getRefund()"
                 class="badge badge-danger badge-pill"

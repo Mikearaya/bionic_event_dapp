@@ -73,8 +73,6 @@ export class EventApiService {
     const total = price * quantity;
 
     const val = this.ethereumApi.web3.utils.toWei(total.toString(), "ether");
-    alert(val);
-    alert(this.ethereumApi.account);
     await event.purchaseTicket(quantity, {
       from: this.ethereumApi.account,
       value: val

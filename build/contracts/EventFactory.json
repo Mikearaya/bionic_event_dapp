@@ -2442,10 +2442,55 @@
       "links": {},
       "address": "0xD9B85c948e373A9Eb4F418Ef132F940BAEF5e378",
       "transactionHash": "0x921f61e8656a15cc26a72d06332c9baf1a0d26ab3f5cd32c187ef0fcc9809e87"
+    },
+    "1573990995906": {
+      "events": {
+        "0x3b53e9e227263951bfde24bc79ccfbaed53808697d76023ccdbf62cca06e9301": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "_address",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "_name",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "_ticketPrice",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "location",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "startDate",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "endDate",
+              "type": "uint256"
+            }
+          ],
+          "name": "eventCreated",
+          "type": "event",
+          "signature": "0x3b53e9e227263951bfde24bc79ccfbaed53808697d76023ccdbf62cca06e9301"
+        }
+      },
+      "links": {},
+      "address": "0xBcE10B700EE844bf677d7FF9ae5a74Dc9348cC79",
+      "transactionHash": "0xf0d204cbe79501288fc0c89f6596601a25accd9feffb6a94ba179aacceebf9ee"
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2019-11-17T05:49:41.285Z",
+  "updatedAt": "2019-11-17T11:49:58.320Z",
   "devdoc": {
     "methods": {}
   },
