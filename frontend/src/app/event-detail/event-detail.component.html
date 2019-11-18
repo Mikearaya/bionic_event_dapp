@@ -3,36 +3,39 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header bg-primary text-white">
-          {{ eventDetail.name }}
+          <span> {{ eventDetail.name }}</span>
+          <span>{{ eventDetail.owner }}</span>
+          <span>{{ currentAccount }}</span>
         </div>
-        <div class="card-body">
-          <p class="card-text">
-            {{ eventDetail.description }}
-          </p>
+        {{ isOwner() }}
 
+        <button type="button" (click)="cancelEvent()">
+          Cancel
+        </button>
+        <div class="card-body">
           <div class="container">
             <div class="row">
-              <div class="col-3">
-                Start Date
-              </div>
-              <div class="col-3">
-                {{ eventDetail.startDate }}
-              </div>
-              <div class="col-3">
-                End date
-              </div>
-              <div class="col-3">{{ eventDetail.endDate }}</div>
-              <div class="col-3">
-                Location
-              </div>
-              <div class="col-3">
-                {{ eventDetail.location }}
-              </div>
-              <div class="col-3">
-                Ticket price
-              </div>
-              <div class="col-3">{{ eventDetail.ticketPrice }} Ether</div>
+              <ul class="list-group col-12">
+                <li class="list-group-item ">
+                  <strong> from: </strong>
+                  <span> {{ eventDetail.startDate }}</span>
+                </li>
+                <li class="list-group-item">
+                  <strong>To</strong> <span> {{ eventDetail.endDate }}</span>
+                </li>
+                <li class="list-group-item">
+                  <strong>Location</strong>
+                  <span> {{ eventDetail.location }}</span>
+                </li>
+                <li class="list-group-item">
+                  <strong>Ticket Price</strong>
+                  <span> {{ eventDetail.ticketPrice }} </span>
+                </li>
+              </ul>
             </div>
+          </div>
+          <div class="jumbotron mt-3">
+            {{ eventDetail.description }}
           </div>
 
           <form [formGroup]="bookingForm" class="mt-5" (ngSubmit)="getTicket()">
@@ -53,7 +56,7 @@
                 (click)="getTicket()"
                 href="#"
                 type="submit"
-                class="btn btn-success col-10"
+                class="btn btn-success btn-lg "
                 [disabled]="!quantity"
               >
                 Get Ticket
@@ -82,18 +85,14 @@
           <ul class="list-group container" *ngIf="userTickets.length">
             <li
               class="list-group-item d-flex justify-content-between align-items-center"
-              *ngFor="
-                let ticket of eventDetail.ticketId;
-                let i = index;
-                let last = last
-              "
+              *ngFor="let ticket of userTickets; let i = index; let last = last"
             >
-              {{ ticket | number }}
+              {{ ticket }}
               <button
-                (click)="getRefund()"
+                (click)="getRefund(ticket)"
                 class="badge badge-danger badge-pill"
               >
-                x
+                Get Refund
               </button>
             </li>
           </ul>

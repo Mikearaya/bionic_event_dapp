@@ -78,4 +78,15 @@ export class EventApiService {
       value: val
     });
   }
+
+  async getTicketRefund(eventId: string, ticketId: number) {
+    const event = await this.Event.at(eventId);
+    await event.getRefund(ticketId, { from: this.ethereumApi.account });
+  }
+
+  async cancelEvent(eventId: string) {
+    alert(eventId);
+    const event = await this.Event.at(eventId);
+    await event.cancelEvent({ from: this.ethereumApi.account });
+  }
 }

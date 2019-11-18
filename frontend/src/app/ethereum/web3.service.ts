@@ -17,7 +17,6 @@ export class Web3Service {
   selectedAccount$: Subject<string> = new Subject<string>();
 
   constructor() {
-    this.selectedAccount$.next("");
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof window.ethereum !== "undefined") {
       console.warn(
@@ -60,5 +59,9 @@ export class Web3Service {
       this.account = this.accountsList[0];
       this.selectedAccount$.next(this.account);
     });
+  }
+
+  subscribeToAccountChange() {
+    this.selectedAccount$.subscribe((a: string) => (this.account = a));
   }
 }

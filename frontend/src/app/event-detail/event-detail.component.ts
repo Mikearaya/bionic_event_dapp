@@ -3,6 +3,7 @@ import { EventDetailModel } from "../event-detail-model";
 import { EventApiService } from "../event-api.service";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { Web3Service } from "../ethereum/web3.service";
 
 @Component({
   selector: "app-event-detail",
@@ -11,6 +12,8 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 })
 export class EventDetailComponent implements OnInit {
   eventDetail: EventDetailModel;
+  currentAccount: string;
+  isCanceled: boolean;
 
   userTickets = [];
   private eventId: string;
@@ -21,6 +24,7 @@ export class EventDetailComponent implements OnInit {
 
   constructor(
     private eventApi: EventApiService,
+    private ethereumApi: Web3Service,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder
   ) {
@@ -30,7 +34,9 @@ export class EventDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.eventId = this.activatedRoute.snapshot.paramMap.get("eventId");
-
+    this.ethereumApi.selectedAccount$.subscribe(
+      (a: string) => (this.currentAccount = a)
+    );
     if (this.eventId) {
       const detail = await this.eventApi.getEventById(this.eventId);
 
@@ -42,7 +48,7 @@ export class EventDetailComponent implements OnInit {
       this.eventDetail.startDate = await detail.startDate();
       this.eventDetail.endDate = await detail.endDate();
       this.eventDetail.ticketPrice = await detail.ticketPrice();
-
+      this.isCanceled = await detail.isCanceled();
       this.userTickets = await this.eventApi.getUserTickets(this.eventId);
     }
   }
@@ -53,8 +59,8 @@ export class EventDetailComponent implements OnInit {
     });
   }
 
-  getRefund(): void {
-    alert("inside get refund");
+  async getRefund(ticketId: number) {
+    await this.eventApi.getTicketRefund(this.eventId, ticketId);
   }
 
   async getTicket() {
@@ -62,5 +68,14 @@ export class EventDetailComponent implements OnInit {
       this.eventId,
       this.bookingForm.get("quantity").value
     );
+  }
+
+  isOwner(): boolean {
+    return this.currentAccount === this.eventDetail.owner;
+  }
+
+  async cancelEvent() {
+    const result = await this.eventApi.cancelEvent(this.eventId);
+    alert(result);
   }
 }

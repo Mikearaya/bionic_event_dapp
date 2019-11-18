@@ -77,17 +77,16 @@ contract Event is ERC721Full {
         owner.transfer(address(this).balance);
     }
 
-    function getRefund() public {
+    function getRefund(uint  ticket) public {
         require(address(0) != msg.sender, "invalid address provided");
         require(canceled, "refund is only available for cacanceled events");
-        uint[] memory tokens = _tokensOfOwner(msg.sender);
+            _burn(ticket);
+        msg.sender.transfer(ticketPrice);
 
-        require(tokens.length > 0, "no tokens found under the given user");
-        for(uint8 i = 0; i < tokens.length; i++) {
-            _burn(tokens[i]);
-        }
-        msg.sender.transfer(ticketPrice.mul(tokens.length));
-
+    }
+    
+    function isCanceled() public view returns(bool) {
+        return canceled;
     }
 
       modifier onlyOwner {
