@@ -1,14 +1,21 @@
-import { Component, OnInit, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectionStrategy
+} from "@angular/core";
 import { EventDetailModel } from "../event-detail-model";
 import { EventApiService } from "../event-api.service";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { Web3Service } from "../ethereum/web3.service";
 
+declare var $: any;
 @Component({
   selector: "app-event-detail",
   templateUrl: "./event-detail.component.html",
-  styleUrls: ["./event-detail.component.css"]
+  styleUrls: ["./event-detail.component.css"],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class EventDetailComponent implements OnInit {
   eventDetail: EventDetailModel;
@@ -85,5 +92,9 @@ export class EventDetailComponent implements OnInit {
     };
 
     return JSON.stringify(ticketCode);
+  }
+
+  async transferTo(address: string, tokenId: number) {
+    await this.eventApi.transferTicket(this.eventId, address, tokenId);
   }
 }

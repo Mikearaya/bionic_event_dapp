@@ -88,6 +88,25 @@
               *ngFor="let ticket of userTickets; let i = index; let last = last"
             >
               <qr-code [value]="generateCode()" [size]="150"></qr-code>
+              <div
+                class="modal fade bd-example-modal-sm"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="mySmallModalLabel"
+                aria-hidden="true"
+                id="myModal"
+              ></div>
+
+              <input type="text" class="form-control" #transferAddress />
+
+              <button
+                (click)="transferTo(transferAddress.value, ticket)"
+                data-toggle="modal"
+                [disabled]="transferAddress.value"
+                class="badge badge-info badge-pill"
+              >
+                Transfer
+              </button>
 
               <button
                 (click)="getRefund(ticket)"

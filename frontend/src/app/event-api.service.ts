@@ -91,4 +91,15 @@ export class EventApiService {
 
     await event.cancelEvent();
   }
+
+  async transferTicket(
+    eventId: string,
+    recieverAccount: string,
+    tokenId: number
+  ) {
+    const event = await this.Event.at(eventId);
+    await event.transferTicket(recieverAccount, tokenId, {
+      from: this.ethereumApi.account
+    });
+  }
 }
