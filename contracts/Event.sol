@@ -81,7 +81,7 @@ contract Event is ERC721Full {
         require(address(0) != msg.sender, "invalid address provided");
         require(canceled, "refund is only available for cacanceled events");
             _burn(ticket);
-        msg.sender.transfer(ticketPrice);
+        msg.sender.transfer(ticketPrice.mul(1000000));
 
     }
     

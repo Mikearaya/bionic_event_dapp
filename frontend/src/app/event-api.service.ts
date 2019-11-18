@@ -80,13 +80,15 @@ export class EventApiService {
   }
 
   async getTicketRefund(eventId: string, ticketId: number) {
+    console.log("ticket id", ticketId);
+    console.log("event if", eventId);
     const event = await this.Event.at(eventId);
     await event.getRefund(ticketId, { from: this.ethereumApi.account });
   }
 
   async cancelEvent(eventId: string) {
-    alert(eventId);
     const event = await this.Event.at(eventId);
-    await event.cancelEvent({ from: this.ethereumApi.account });
+
+    await event.cancelEvent();
   }
 }

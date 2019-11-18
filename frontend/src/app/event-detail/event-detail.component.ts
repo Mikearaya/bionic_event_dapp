@@ -76,6 +76,14 @@ export class EventDetailComponent implements OnInit {
 
   async cancelEvent() {
     const result = await this.eventApi.cancelEvent(this.eventId);
-    alert(result);
+  }
+
+  generateCode(ticketId: string): string {
+    const ticketCode = {
+      ticketId: ticketId,
+      account: this.currentAccount
+    };
+
+    return JSON.stringify(ticketCode);
   }
 }

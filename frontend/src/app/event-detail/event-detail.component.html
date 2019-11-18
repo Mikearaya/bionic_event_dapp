@@ -87,7 +87,8 @@
               class="list-group-item d-flex justify-content-between align-items-center"
               *ngFor="let ticket of userTickets; let i = index; let last = last"
             >
-              {{ ticket }}
+              <qr-code [value]="generateCode()" [size]="150"></qr-code>
+
               <button
                 (click)="getRefund(ticket)"
                 class="badge badge-danger badge-pill"

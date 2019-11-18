@@ -9,7 +9,7 @@ import { EventFormComponent } from "./event-form/event-form.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { EthereumModule } from "./ethereum/ethereum.module";
-
+import { QRCodeModule } from "angular2-qrcode";
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +19,7 @@ import { EthereumModule } from "./ethereum/ethereum.module";
     EventFormComponent
   ],
   imports: [
+    QRCodeModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
