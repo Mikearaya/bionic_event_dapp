@@ -29,10 +29,12 @@ export class EventApiService {
     this.deployedFactory = await this.EventFactory.deployed();
 
     const log = await this.deployedFactory.getPastEvents("eventCreated", {
+      filter: { _filterName: "", _filterLocation: "" },
       fromBlock: 0,
       toBlock: "latest"
     });
     const event: any[] = [];
+    console.log(log);
     log.forEach(element => {
       event.push({
         Id: element.returnValues._address,
