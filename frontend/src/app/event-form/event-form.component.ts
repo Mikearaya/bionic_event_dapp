@@ -54,7 +54,6 @@ export class EventFormComponent implements OnInit {
   }
 }
 
-function toTimestamp(strDate) {
-  let datum = Date.parse(strDate);
-  return datum / 1000;
+function toTimestamp(date) {
+  return new Date(date).valueOf();
 }

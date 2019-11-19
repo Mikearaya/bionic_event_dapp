@@ -4,24 +4,22 @@
       <div class="card">
         <div class="card-header bg-primary text-white">
           <span> {{ eventDetail.name }}</span>
-          <span>{{ eventDetail.owner }}</span>
-          <span>{{ currentAccount }}</span>
         </div>
-        {{ isOwner() }}
-
-        <button type="button" (click)="cancelEvent()">
-          Cancel
-        </button>
         <div class="card-body">
           <div class="container">
             <div class="row">
               <ul class="list-group col-12">
                 <li class="list-group-item ">
+                  <strong> Created By: </strong>
+                  <span> {{ eventDetail.owner }}</span>
+                </li>
+                <li class="list-group-item ">
                   <strong> from: </strong>
-                  <span> {{ eventDetail.startDate }}</span>
+                  <span> {{ eventDetail?.startDate?.toString() | date }}</span>
                 </li>
                 <li class="list-group-item">
-                  <strong>To</strong> <span> {{ eventDetail.endDate }}</span>
+                  <strong>To</strong>
+                  <span> {{ eventDetail?.endDate?.toString() | date }}</span>
                 </li>
                 <li class="list-group-item">
                   <strong>Location</strong>
@@ -29,7 +27,7 @@
                 </li>
                 <li class="list-group-item">
                   <strong>Ticket Price</strong>
-                  <span> {{ eventDetail.ticketPrice }} </span>
+                  <span> {{ eventDetail.ticketPrice }} Ether </span>
                 </li>
               </ul>
             </div>
@@ -56,7 +54,7 @@
                 (click)="getTicket()"
                 href="#"
                 type="submit"
-                class="btn btn-success btn-lg "
+                class="btn btn-warning btn-lg "
                 [disabled]="!quantity"
               >
                 Get Ticket
@@ -70,6 +68,27 @@
   <div class="row">
     <div class="col-12">
       <div class="card">
+        <div class="row">
+          <div class="col-6">
+            <button
+              type="button"
+              class="btn btn-success btn-success btn-lg "
+              (click)="cancelEvent()"
+            >
+              Collect Payment
+            </button>
+          </div>
+          <div class="col-6">
+            <button
+              type="button"
+              class="btn btn-success btn-danger btn-lg "
+              (click)="cancelEvent()"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+
         <div class="card-header bg-info">
           Your Tickets
         </div>
