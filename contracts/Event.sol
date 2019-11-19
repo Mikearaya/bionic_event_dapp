@@ -38,9 +38,10 @@ contract Event is ERC721Full {
 
 
     function purchaseTicket(uint quantity) public payable {
+        require(quantity <= MAX_PURCHASE, "can not purchase more than 5 ticket at once");
         require(available  >= quantity, "not enough ticket quantity available!!!");
         require(msg.value >= ticketPrice.mul(quantity), "not enough money sent");
-        require(quantity <= MAX_PURCHASE, "can not purchase more than 5 ticket at once");
+        
         for(uint8 i = 0; i < quantity; i++) {
             ticketId++;
             available--;
@@ -54,7 +55,7 @@ contract Event is ERC721Full {
     }
 
 
-    function isTicketValid(address _owner, uint _tokenId) onlyOwner public returns(bool) {
+    function isTicketValid(address _owner, uint _tokenId) onlyOwner public  returns(bool) {
         if(ownerOf(_tokenId) == _owner) {
             _burn(_tokenId);
             return true;
@@ -81,7 +82,7 @@ contract Event is ERC721Full {
         require(address(0) != msg.sender, "invalid address provided");
         require(canceled, "refund is only available for cacanceled events");
             _burn(ticket);
-        msg.sender.transfer(ticketPrice.mul(1000000));
+        msg.sender.transfer(ticketPrice);
 
     }
     

@@ -7,7 +7,7 @@ async function tryCatch(promise, reason) {
   } catch (error) {
     assert(error, "Expected a VM exception but did not get one");
     assert(
-      error.message.search(errorString + reason) >= 0,
+      error.message.indexOf(reason) != -1,
       "Expected an error starting with '" +
         errorString +
         reason +
@@ -21,6 +21,9 @@ async function tryCatch(promise, reason) {
 module.exports = {
   catchRevert: async function(promise) {
     await tryCatch(promise, "revert");
+  },
+  catchRequire: async function(promise) {
+    await tryCatch(promise, "require");
   },
   catchOutOfGas: async function(promise) {
     await tryCatch(promise, "out of gas");

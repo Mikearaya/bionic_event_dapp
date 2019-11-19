@@ -1,7 +1,7 @@
 const EventFactory = artifacts.require("EventFactory");
 let catchRevert = require("./exceptionHelper.js").catchRevert;
-
 const assert = require("assert");
+
 contract("EventFactory", function(accounts) {
   let eventFactory;
 
@@ -25,7 +25,8 @@ contract("EventFactory", function(accounts) {
       200,
       1,
       "event description",
-      "addis ababa"
+      "addis ababa",
+      { from: accounts[0] }
     );
 
     var result = await eventFactory.getDeployedEvents();
