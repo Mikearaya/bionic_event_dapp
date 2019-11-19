@@ -61,5 +61,6 @@ congragulations now you can use the application.
 
 ### Testing contract
 
+start ganache server by running `ganache-cli` next
 on the root directory of the project run
 `truffle test` all of the available tests should execute.
