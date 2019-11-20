@@ -20,6 +20,7 @@ the project is developed using different technologies.
 - ganache-cli
 - metamask
 - truffle
+- IPFS
 
 ## Enviroment setup
 
