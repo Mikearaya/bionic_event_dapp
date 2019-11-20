@@ -8,7 +8,7 @@ contract EventFactory {
 
 
         /**
-        @title Event Created
+        
         @dev created and deployed new event and saves it in the event list array
         @param _name title of the event to be created 
         @param start start date of event in unix timestamp
@@ -31,7 +31,7 @@ contract EventFactory {
     }
 
     /**
-    @title get deployed events
+
     @dev returns list of event addresses
     @return deployedEvents array of event address */
    function getDeployedEvents() public view returns(Event[] memory) {

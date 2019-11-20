@@ -122,7 +122,9 @@
         <div class="image">
           <input
             type="file"
+            #eventImage
             formControlName="image"
+            (change)="imageSelected($event)"
             class="image-input"
             id="image"
           />

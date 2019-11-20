@@ -13,12 +13,13 @@ contract Event is ERC721Full {
     string public location;
     uint8 private MAX_PURCHASE = 5;
     string public  description;
+    string public imageHash;
     bool canceled;
     uint public ticketPrice;
     address payable public  owner;
 
     /**@dev created new instance of Event 
-    @param organizer account address of event organizer creating the event 
+    @param _organizer account address of event organizer creating the event 
     @param _name title of the event
     @param _start start date of event given in unix timestamp
     @param _end end date of event provided in unix timestamp
@@ -50,7 +51,7 @@ contract Event is ERC721Full {
 
 
 
-    /**@title Purchase ticket
+    /**
     @dev allows user to purchase ticket for the event
     @param quantity total amount of ticket the user wishes to purchase maximum amount is 5
     */
@@ -66,13 +67,22 @@ contract Event is ERC721Full {
         }
     }
 
-    /**
-    @title Transfer ticket 
-    @dev allow ticket holders to transfer ownership of there ticket to other users
-    @param to address of the reciever 
-    @param tokenId id of the ticket to be transfered
-    */
 
+
+    /**
+    @dev allows users to upload image of the event
+    @param _imageHash image hash stored o IPFS
+     */
+    function setImage(string memory _imageHash) public {
+        imageHash = _imageHash;
+    }
+
+    /**
+    
+    @dev allow ticket holders to transfer ownership of there ticket to other users
+    @param _to address of the reciever 
+    @param _tokenId id of the ticket to be transfered
+    */
     function transferTicket(address _to, uint _tokenId) public {
     require(address(0) != _to, "invalid address provided");
     transferFrom(msg.sender, _to, _tokenId);
@@ -80,11 +90,11 @@ contract Event is ERC721Full {
 
 
     /**
-    @title is ticket valid
+    
     @dev validated if a given ticket id is owned by the given user 
-    @param owner address of the owner of ticket to be validated
-    @param tokenId id of the ticket to be validated
-    @returns x boolean value holding the result 
+    @param _owner address of the owner of ticket to be validated
+    @param _tokenId id of the ticket to be validated
+    @return x boolean value holding the result 
     */
     function isTicketValid(address _owner, uint _tokenId) onlyOwner public  returns(bool) {
         if(ownerOf(_tokenId) == _owner) {
@@ -97,7 +107,7 @@ contract Event is ERC721Full {
 
 
     /**
-    @title cancel event
+    
     @dev allows event organizers to cancel events they have created 
     */
 
@@ -108,17 +118,17 @@ contract Event is ERC721Full {
 
   /**
   
-  @title get owners tickets 
+  
   @dev returns tickets array owned by a given user
   @param _owner address of the required 
-  @returns x arrays of ticket id owned by user
+  @return x arrays of ticket id owned by user
   */
     function getOwnersTicket(address _owner) public view returns(uint[] memory) {
         return _tokensOfOwner(_owner);
     }
     
     /**
-    @title collect payment
+    
     @dev lets event organizer get ether collected for tickets sold for the event
      */
 
@@ -128,7 +138,7 @@ contract Event is ERC721Full {
     }
 
     /**
-    @title get refund 
+    
     @dev returns ether for each ticket the user has incase the event is canceled
     @param ticket id of the ticket to get refunds for
      */
@@ -141,9 +151,9 @@ contract Event is ERC721Full {
     }
 
     /**
-    @title is canceled
+    
     @dev lets users check if the event is canceled or not
-    @returns true or false
+    @return true or false
      */
     
     function isCanceled() public view returns(bool) {
@@ -151,7 +161,7 @@ contract Event is ERC721Full {
     }
 
     /**
-    @title only owner 
+    
     @dev modifier that checked if current request is made by the event owner 
      */
       modifier onlyOwner {

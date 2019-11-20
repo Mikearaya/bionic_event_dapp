@@ -7,6 +7,16 @@ import {
 } from "@angular/forms";
 import { EventApiService } from "../event-api.service";
 
+declare var require: any;
+declare var window: any;
+
+const ipfsClient = require("ipfs-http-client");
+const ipfs = ipfsClient({
+  host: "ipfs.infura.io",
+  port: 5001,
+  protocol: "https"
+});
+
 @Component({
   selector: "app-event-form",
   templateUrl: "./event-form.component.html",
@@ -51,6 +61,25 @@ export class EventFormComponent implements OnInit {
       description: this.getControl("description").value,
       ticketPrice: this.getControl("ticketPrice").value
     });
+  }
+  imageSelected(event: any): void {
+    event.preventDefault();
+    console.log("file selected ....");
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(event.target.files[0]);
+    reader.onload = e => {
+      console.log("buffer");
+      /* console.log(Buffer(reader.result)); */
+      ipfs.add(Buffer(reader.result), (error, result) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log(result);
+        }
+      });
+    };
+
+    console.log(event.target.files);
   }
 }
 
