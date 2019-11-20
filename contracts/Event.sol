@@ -112,7 +112,7 @@ contract Event is ERC721Full {
     */
 
   function cancelEvent() onlyOwner public {
-      require(now > startDate, "can not cancel event after it has started");
+     // require(now > startDate, "can not cancel event after it has started");
       canceled = true;
   }
 
@@ -133,8 +133,9 @@ contract Event is ERC721Full {
      */
 
     function collectPayment() onlyOwner public {
-        require(now > endDate && !canceled, "can not collect payment before the event is over");
+       // require(now > endDate && !canceled, "can not collect payment before the event is over");
         owner.transfer(address(this).balance);
+        //selfdestruct(msg.sender);
     }
 
     /**

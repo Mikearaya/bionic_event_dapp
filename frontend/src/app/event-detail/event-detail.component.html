@@ -4,20 +4,8 @@
       <div class="card">
         <div class="card-header bg-primary text-white">
           <span> {{ eventDetail.name }}</span>
-
-          <div class="col-12">
-            <div class="image">
-              <input
-                type="file"
-                #eventImage
-                (change)="imageSelected($event)"
-                class="image-input"
-                id="image"
-              />
-            </div>
-          </div>
         </div>
-
+        balance = {{ cotractBalance }}
         <div class="card-body">
           <div class="container">
             <div class="row">
@@ -30,6 +18,17 @@
                   class="card-img-top"
                   alt="..."
                 />
+              </div>
+              <div class="col-4">
+                <div class="image">
+                  <input
+                    type="file"
+                    #eventImage
+                    (change)="imageSelected($event)"
+                    class="image-input"
+                    id="image"
+                  />
+                </div>
               </div>
             </div>
             <div class="row">

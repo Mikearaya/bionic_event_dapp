@@ -25,6 +25,7 @@ export class EventDetailComponent implements OnInit {
   eventDetail: EventDetailModel;
   currentAccount: string;
   isCanceled: boolean;
+  cotractBalance: number;
   imageHash = "Qmdu4R9YTgnyogp2htYMzbFZfinoE8tCfKwUCnbi6FjQHz";
 
   userTickets = [];
@@ -52,6 +53,13 @@ export class EventDetailComponent implements OnInit {
     if (this.eventId) {
       const detail = await this.eventApi.getEventById(this.eventId);
 
+      const balance = await this.ethereumApi.web3.eth.getBalance(this.eventId);
+      console.log("balance ...", balance);
+      this.cotractBalance = this.ethereumApi.web3.utils.fromWei(
+        balance,
+        "ether"
+      );
+
       this.eventDetail.name = await detail.name();
       this.eventDetail.description = await detail.description();
       this.eventDetail.owner = await detail.owner();
@@ -59,7 +67,10 @@ export class EventDetailComponent implements OnInit {
       this.eventDetail.location = await detail.location();
       this.eventDetail.startDate = await detail.startDate();
       this.eventDetail.endDate = await detail.endDate();
-      this.eventDetail.ticketPrice = await detail.ticketPrice();
+      this.eventDetail.ticketPrice = this.ethereumApi.web3.utils.fromWei(
+        await detail.ticketPrice(),
+        "ether"
+      );
       this.eventDetail.image = await detail.imageHash();
       this.isCanceled = await detail.isCanceled();
       this.userTickets = await this.eventApi.getUserTickets(this.eventId);

@@ -42,7 +42,7 @@ export class EventApiService {
       toBlock: "latest"
     });
     const event: any[] = [];
-    console.log(log);
+
     log.forEach(element => {
       event.push({
         Id: element.returnValues._address,
@@ -64,26 +64,25 @@ export class EventApiService {
     ipfs.add(imageBuffer, (error, result) => {
       if (error) {
         console.error(error);
-      } else {
-        console.log(result[0].hash);
       }
-
       event.setImage(result[0].hash, { from: this.ethereumApi.account });
     });
   }
 
   async creatEvent(event: EventModel) {
     this.deployedFactory = await this.EventFactory.deployed();
+
     const eventsList = await this.deployedFactory.createEvent(
       event.name,
       event.startDate,
       event.endDate,
       event.availableTickets,
-      event.ticketPrice,
+      this.ethereumApi.web3.utils.toWei(event.ticketPrice.toString(), "ether"),
       event.description,
       event.location,
       { from: this.ethereumApi.account }
     );
+
     return eventsList;
   }
 
@@ -97,7 +96,7 @@ export class EventApiService {
     const price = await event.ticketPrice();
     const total = price * quantity;
 
-    const val = this.ethereumApi.web3.utils.toWei(total.toString(), "ether");
+    const val = total.toString();
     await event.purchaseTicket(quantity, {
       from: this.ethereumApi.account,
       value: val
@@ -105,8 +104,6 @@ export class EventApiService {
   }
 
   async getTicketRefund(eventId: string, ticketId: number) {
-    console.log("ticket id", ticketId);
-    console.log("event if", eventId);
     const event = await this.Event.at(eventId);
     await event.getRefund(ticketId, { from: this.ethereumApi.account });
   }
@@ -114,7 +111,8 @@ export class EventApiService {
   async cancelEvent(eventId: string) {
     const event = await this.Event.at(eventId);
 
-    await event.cancelEvent();
+    alert(this.ethereumApi.account);
+    await event.cancelEvent({ from: this.ethereumApi.account, gas: "1000000" });
   }
 
   async transferTicket(
