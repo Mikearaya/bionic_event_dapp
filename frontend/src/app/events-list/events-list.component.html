@@ -8,7 +8,11 @@
       *ngFor="let eve of eventsList; let i = index; let last = last"
     >
       <div class="card" style="width: 18rem;">
-        <img [src]="'assets/img1.jpeg'" class="card-img-top" alt="..." />
+        <img
+          [src]="'https://ipfs.infura.io/ipfs/' + getImageHash(eve.image)"
+          class="card-img-top"
+          alt="..."
+        />
         <div class="card-body">
           <h5 class="card-title">{{ eve.name }}</h5>
           <p class="card-text">
@@ -26,3 +30,10 @@
     </a>
   </div>
 </div>
+<img
+  [src]="
+    'https://ipfs.infura.io/ipfs/Qmdu4R9YTgnyogp2htYMzbFZfinoE8tCfKwUCnbi6FjQHz'
+  "
+  class="card-img-top"
+  alt="..."
+/>

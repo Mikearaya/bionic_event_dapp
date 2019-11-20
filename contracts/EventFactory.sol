@@ -8,7 +8,6 @@ contract EventFactory {
 
 
         /**
-        
         @dev created and deployed new event and saves it in the event list array
         @param _name title of the event to be created 
         @param start start date of event in unix timestamp

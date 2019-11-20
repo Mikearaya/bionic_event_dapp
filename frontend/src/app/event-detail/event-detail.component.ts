@@ -11,6 +11,10 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 import { Web3Service } from "../ethereum/web3.service";
 
 declare var $: any;
+declare var require: any;
+declare var Buffer: any;
+declare var window: any;
+
 @Component({
   selector: "app-event-detail",
   templateUrl: "./event-detail.component.html",
@@ -21,6 +25,7 @@ export class EventDetailComponent implements OnInit {
   eventDetail: EventDetailModel;
   currentAccount: string;
   isCanceled: boolean;
+  imageHash = "Qmdu4R9YTgnyogp2htYMzbFZfinoE8tCfKwUCnbi6FjQHz";
 
   userTickets = [];
   private eventId: string;
@@ -55,11 +60,29 @@ export class EventDetailComponent implements OnInit {
       this.eventDetail.startDate = await detail.startDate();
       this.eventDetail.endDate = await detail.endDate();
       this.eventDetail.ticketPrice = await detail.ticketPrice();
+      this.eventDetail.image = await detail.imageHash();
       this.isCanceled = await detail.isCanceled();
       this.userTickets = await this.eventApi.getUserTickets(this.eventId);
     }
   }
 
+  getImageHash(value: string): string {
+    return value ? value : this.imageHash;
+  }
+  imageSelected(event: any): void {
+    event.preventDefault();
+    console.log("file selected ....");
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(event.target.files[0]);
+    reader.onload = e => {
+      console.log("buffer");
+
+      this.eventApi.uploadImage(this.eventId, Buffer(reader.result));
+      /* console.log(Buffer(reader.result)); */
+    };
+
+    console.log(event.target.files);
+  }
   private initializeForm(): void {
     this.bookingForm = this.formBuilder.group({
       quantity: ""

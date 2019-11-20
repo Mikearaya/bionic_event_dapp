@@ -8,6 +8,7 @@ import {
 import { EventApiService } from "../event-api.service";
 
 declare var require: any;
+declare var Buffer: any;
 declare var window: any;
 
 const ipfsClient = require("ipfs-http-client");
@@ -69,14 +70,9 @@ export class EventFormComponent implements OnInit {
     reader.readAsArrayBuffer(event.target.files[0]);
     reader.onload = e => {
       console.log("buffer");
+
+      //this.eventApi.uploadImage(this. Buffer(reader.result));
       /* console.log(Buffer(reader.result)); */
-      ipfs.add(Buffer(reader.result), (error, result) => {
-        if (error) {
-          console.error(error);
-        } else {
-          console.log(result);
-        }
-      });
     };
 
     console.log(event.target.files);

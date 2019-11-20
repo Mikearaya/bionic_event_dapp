@@ -5,7 +5,15 @@ declare var require: any;
 const contract = require("truffle-contract");
 const eventFactoryArtifact = require("../../../build/contracts/EventFactory.json");
 const eventArtifact = require("../../../build/contracts/Event.json");
+declare var Buffer: any;
+declare var window: any;
 
+const ipfsClient = require("ipfs-http-client");
+const ipfs = ipfsClient({
+  host: "ipfs.infura.io",
+  port: 5001,
+  protocol: "https"
+});
 @Injectable({
   providedIn: "root"
 })
@@ -42,11 +50,26 @@ export class EventApiService {
         ticketPrice: element.returnValues._ticketPrice,
         location: element.returnValues.location,
         startDate: element.returnValues.startDate,
-        endDate: element.returnValues.endDate
+        endDate: element.returnValues.endDate,
+        image: element.returnValues.image
       });
     });
 
     return event;
+  }
+
+  async uploadImage(eventId: string, imageBuffer: any) {
+    const event = await this.Event.at(eventId);
+
+    ipfs.add(imageBuffer, (error, result) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(result[0].hash);
+      }
+
+      event.setImage(result[0].hash, { from: this.ethereumApi.account });
+    });
   }
 
   async creatEvent(event: EventModel) {
