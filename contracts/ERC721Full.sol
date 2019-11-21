@@ -2,6 +2,8 @@
 // File: @openzeppelin/contracts/introspection/IERC165.sol
 
 pragma solidity ^0.5.0;
+pragma solidity ^0.5.0;
+
 
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -26,7 +28,7 @@ interface IERC165 {
 
 // File: @openzeppelin/contracts/token/ERC721/IERC721.sol
 
-pragma solidity ^0.5.0;
+
 
 
 /**

@@ -1,8 +1,8 @@
 pragma solidity ^0.5.0;
 import "./ERC721Full.sol";
 
-/**@title Event */
 
+/** @title Event */
 contract Event is ERC721Full {
 
     string public name;
@@ -17,8 +17,14 @@ contract Event is ERC721Full {
     bool canceled;
     uint public ticketPrice;
     address payable public  owner;
+   
+    event ticketPurchased(address purchaser, uint quanntity, uint date, address indexed indexedPurchased );
+    event ticketTransfered(address _from, address _to, uint _tokenId);
+    event paymentCollected(address _event, address _organizer, uint _balance );
+    event ticketRefended(address _event, address _requestedBy, uint _ticketId, uint _ticketPrice);
 
-    /**@dev created new instance of Event 
+
+    /**@dev created new instance of Event
     @param _organizer account address of event organizer creating the event 
     @param _name title of the event
     @param _start start date of event given in unix timestamp
@@ -65,6 +71,8 @@ contract Event is ERC721Full {
             available--;
             _mint(msg.sender,ticketId);
         }
+
+        emit ticketPurchased(msg.sender, quantity, now, msg.sender);
     }
 
 
@@ -84,8 +92,9 @@ contract Event is ERC721Full {
     @param _tokenId id of the ticket to be transfered
     */
     function transferTicket(address _to, uint _tokenId) public {
-    require(address(0) != _to, "invalid address provided");
-    transferFrom(msg.sender, _to, _tokenId);
+        require(address(0) != _to, "invalid address provided");
+        transferFrom(msg.sender, _to, _tokenId);
+        emit ticketTransfered(msg.sender, _to, _tokenId);
     }
 
 
@@ -136,6 +145,7 @@ contract Event is ERC721Full {
        // require(now > endDate && !canceled, "can not collect payment before the event is over");
         owner.transfer(address(this).balance);
         //selfdestruct(msg.sender);
+       emit paymentCollected(address(this), msg.sender, address(this).balance );
     }
 
     /**
@@ -148,7 +158,7 @@ contract Event is ERC721Full {
         require(canceled, "refund is only available for cacanceled events");
             _burn(ticket);
         msg.sender.transfer(ticketPrice);
-
+       emit ticketRefended(address(this), msg.sender, ticket, ticketPrice);
     }
 
     /**

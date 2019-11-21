@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import './Event.sol';
+import "./Event.sol";
 
 /**
 @title Event factory */
