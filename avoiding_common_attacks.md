@@ -8,3 +8,6 @@
 
 3. Denial of service by block gas limit ( or startGas)
    this type of attack is prevented by limiting the use of for loop and also by using fixed loop rather that variable loop based on dynamic data.
+
+4. Mythx Security / truffle Security
+   to mitigate security issues i have used help from a mythx truffle plugin.

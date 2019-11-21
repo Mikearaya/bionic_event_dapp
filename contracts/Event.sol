@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.5.13;
 import "./ERC721Full.sol";
 
 
@@ -14,14 +14,14 @@ contract Event is ERC721Full {
     uint8 private MAX_PURCHASE = 5;
     string public  description;
     string public imageHash;
-    bool canceled;
+    bool private canceled;
     uint public ticketPrice;
     address payable public  owner;
    
-    event ticketPurchased(address purchaser, uint quanntity, uint date, address indexed indexedPurchased );
-    event ticketTransfered(address _from, address _to, uint _tokenId);
-    event paymentCollected(address _event, address _organizer, uint _balance );
-    event ticketRefended(address _event, address _requestedBy, uint _ticketId, uint _ticketPrice);
+    event TicketPurchased(address purchaser, uint quanntity, uint date, address indexed indexedPurchased );
+    event TicketTransfered(address _from, address _to, uint _tokenId);
+    event PaymentCollected(address _event, address _organizer, uint _balance );
+    event TicketRefended(address _event, address _requestedBy, uint _ticketId, uint _ticketPrice);
 
 
     /**@dev created new instance of Event
@@ -34,6 +34,7 @@ contract Event is ERC721Full {
     @param supply available tickets for sell to the event
     @param _ticketPrice ticket price in wei
     */
+
     constructor(address payable _organizer, 
     string memory _name, 
     uint _start, 
@@ -72,7 +73,7 @@ contract Event is ERC721Full {
             _mint(msg.sender,ticketId);
         }
 
-        emit ticketPurchased(msg.sender, quantity, now, msg.sender);
+        emit TicketPurchased(msg.sender, quantity, now, msg.sender);
     }
 
 
@@ -82,7 +83,7 @@ contract Event is ERC721Full {
     @param _imageHash image hash stored o IPFS
      */
     function setImage(string memory _imageHash) public {
-        imageHash = _imageHash;
+   imageHash = _imageHash;
     }
 
     /**
@@ -94,7 +95,7 @@ contract Event is ERC721Full {
     function transferTicket(address _to, uint _tokenId) public {
         require(address(0) != _to, "invalid address provided");
         transferFrom(msg.sender, _to, _tokenId);
-        emit ticketTransfered(msg.sender, _to, _tokenId);
+        emit TicketTransfered(msg.sender, _to, _tokenId);
     }
 
 
@@ -145,7 +146,7 @@ contract Event is ERC721Full {
        // require(now > endDate && !canceled, "can not collect payment before the event is over");
         owner.transfer(address(this).balance);
         //selfdestruct(msg.sender);
-       emit paymentCollected(address(this), msg.sender, address(this).balance );
+       emit PaymentCollected(address(this), msg.sender, address(this).balance );
     }
 
     /**
@@ -158,7 +159,7 @@ contract Event is ERC721Full {
         require(canceled, "refund is only available for cacanceled events");
             _burn(ticket);
         msg.sender.transfer(ticketPrice);
-       emit ticketRefended(address(this), msg.sender, ticket, ticketPrice);
+       emit TicketRefended(address(this), msg.sender, ticket, ticketPrice);
     }
 
     /**
