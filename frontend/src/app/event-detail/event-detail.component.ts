@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   Input,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  NgZone
 } from "@angular/core";
 import { EventDetailModel } from "../event-detail-model";
 import { EventApiService } from "../event-api.service";
@@ -10,16 +11,13 @@ import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { Web3Service } from "../ethereum/web3.service";
 
-declare var $: any;
-declare var require: any;
 declare var Buffer: any;
 declare var window: any;
 
 @Component({
   selector: "app-event-detail",
   templateUrl: "./event-detail.component.html",
-  styleUrls: ["./event-detail.component.css"],
-  changeDetection: ChangeDetectionStrategy.Default
+  styleUrls: ["./event-detail.component.css"]
 })
 export class EventDetailComponent implements OnInit {
   eventDetail: EventDetailModel;
@@ -39,7 +37,8 @@ export class EventDetailComponent implements OnInit {
     private eventApi: EventApiService,
     private ethereumApi: Web3Service,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private ngZone: NgZone
   ) {
     this.eventDetail = new EventDetailModel();
     this.initializeForm();
@@ -47,14 +46,16 @@ export class EventDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.eventId = this.activatedRoute.snapshot.paramMap.get("eventId");
-    this.ethereumApi.selectedAccount$.subscribe(
-      (a: string) => (this.currentAccount = a)
-    );
+    this.ethereumApi.selectedAccount$.subscribe((a: string) => {
+      this.ngZone.run(() => {
+        this.currentAccount = a;
+      });
+    });
     if (this.eventId) {
       const detail = await this.eventApi.getEventById(this.eventId);
 
       const balance = await this.ethereumApi.web3.eth.getBalance(this.eventId);
-      console.log("balance ...", balance);
+
       this.cotractBalance = this.ethereumApi.web3.utils.fromWei(
         balance,
         "ether"
@@ -73,7 +74,11 @@ export class EventDetailComponent implements OnInit {
       );
       this.eventDetail.image = await detail.imageHash();
       this.isCanceled = await detail.isCanceled();
-      this.userTickets = await this.eventApi.getUserTickets(this.eventId);
+      this.eventApi
+        .getUserTickets(this.eventId)
+        .subscribe((tickets: string[]) => {
+          this.userTickets = tickets;
+        });
     }
   }
 
@@ -82,12 +87,10 @@ export class EventDetailComponent implements OnInit {
   }
   imageSelected(event: any): void {
     event.preventDefault();
-    console.log("file selected ....");
+
     const reader = new window.FileReader();
     reader.readAsArrayBuffer(event.target.files[0]);
     reader.onload = e => {
-      console.log("buffer");
-
       this.eventApi.uploadImage(this.eventId, Buffer(reader.result));
       /* console.log(Buffer(reader.result)); */
     };

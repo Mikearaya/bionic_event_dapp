@@ -1,12 +1,11 @@
 import { Injectable } from "@angular/core";
 import { EventModel } from "./event.model";
 import { Web3Service } from "./ethereum/web3.service";
+import { Observable, from } from "rxjs";
 declare var require: any;
 const contract = require("truffle-contract");
 const eventFactoryArtifact = require("../../../build/contracts/EventFactory.json");
 const eventArtifact = require("../../../build/contracts/Event.json");
-declare var Buffer: any;
-declare var window: any;
 
 const ipfsClient = require("ipfs-http-client");
 const ipfs = ipfsClient({
@@ -21,7 +20,7 @@ export class EventApiService {
   controller = "events";
   EventFactory = contract(eventFactoryArtifact);
   Event = contract(eventArtifact);
-
+  event;
   private deployedFactory;
 
   constructor(private ethereumApi: Web3Service) {
@@ -30,7 +29,8 @@ export class EventApiService {
   }
 
   async getEventById(id: string) {
-    return await this.Event.at(id);
+    this.event = await this.Event.at(id);
+    return this.event;
   }
 
   async getEventsList() {
@@ -86,9 +86,8 @@ export class EventApiService {
     return eventsList;
   }
 
-  async getUserTickets(eventId: string) {
-    const event = await this.Event.at(eventId);
-    return await event.getOwnersTicket(this.ethereumApi.account);
+  getUserTickets(eventId: string): Observable<string[]> {
+    return from(this.event.getOwnersTicket(this.ethereumApi.account));
   }
 
   async purchaseTicket(eventId: string, quantity: number) {
@@ -131,6 +130,5 @@ export class EventApiService {
     const result = await event.collectPayment({
       from: this.ethereumApi.account
     });
-    console.log("payment collection result....", result);
   }
 }

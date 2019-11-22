@@ -95,6 +95,7 @@
         <div class="row">
           <div class="col-6">
             <button
+              *ngIf="eventDetail.owner === currentAccount"
               type="button"
               class="btn btn-success btn-success btn-lg "
               (click)="collectPayment()"
@@ -107,6 +108,7 @@
               type="button"
               class="btn btn-success btn-danger btn-lg "
               (click)="cancelEvent()"
+              *ngIf="eventDetail.owner == currentAccount"
             >
               Cancel
             </button>
