@@ -1,4 +1,4 @@
-pragma solidity ^0.5.13;
+pragma solidity ^0.5.0;
 
 import "./Event.sol";
 
@@ -30,7 +30,6 @@ contract EventFactory {
     }
 
     /**
-
     @dev returns list of event addresses
     @return deployedEvents array of event address */
    function getDeployedEvents() public view returns(Event[] memory) {

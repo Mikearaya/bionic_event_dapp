@@ -1,4 +1,4 @@
-pragma solidity 0.5.13;
+pragma solidity ^0.5.0;
 import "./ERC721Full.sol";
 
 
@@ -144,8 +144,8 @@ contract Event is ERC721Full {
 
     function collectPayment() onlyOwner public {
        // require(now > endDate && !canceled, "can not collect payment before the event is over");
-        owner.transfer(address(this).balance);
-        //selfdestruct(msg.sender);
+        //owner.transfer(address(this).balance);
+        selfdestruct(msg.sender);
        emit PaymentCollected(address(this), msg.sender, address(this).balance );
     }
 

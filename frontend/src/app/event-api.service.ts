@@ -125,4 +125,12 @@ export class EventApiService {
       from: this.ethereumApi.account
     });
   }
+
+  async getEventBalance(eventId: string) {
+    const event = await this.Event.at(eventId);
+    const result = await event.collectPayment({
+      from: this.ethereumApi.account
+    });
+    console.log("payment collection result....", result);
+  }
 }

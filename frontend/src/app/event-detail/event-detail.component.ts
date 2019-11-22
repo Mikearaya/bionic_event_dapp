@@ -131,4 +131,8 @@ export class EventDetailComponent implements OnInit {
   async transferTo(address: string, tokenId: number) {
     await this.eventApi.transferTicket(this.eventId, address, tokenId);
   }
+
+  async collectPayment() {
+    await this.eventApi.getEventBalance(this.eventId);
+  }
 }
