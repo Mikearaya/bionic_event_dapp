@@ -15,15 +15,18 @@ export class AppComponent implements OnInit {
   account: Subject<string>;
   currentAccount: string;
 
-  constructor(private ethereumApi: Web3Service) {
+  constructor(private ethereumApi: Web3Service, private zone: NgZone) {
     this.account = this.ethereumApi.selectedAccount$;
-    this.ethereumApi.selectedAccount$.subscribe(
-      ac => (this.currentAccount = ac)
-    );
   }
 
   ngOnInit() {
-    this.currentAccount = this.ethereumApi.account;
+    this.ethereumApi.selectedAccount$.subscribe(ac => {
+      this.currentAccount = ac;
+      this.zone.run(() => {
+        this.currentAccount = ac;
+      });
+      console.log("changed");
+    });
   }
 
   callEventFactory(): void {}

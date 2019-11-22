@@ -143,7 +143,7 @@ contract Event is ERC721Full {
      */
 
     function collectPayment() onlyOwner public {
-       // require(now > endDate && !canceled, "can not collect payment before the event is over");
+       require(now > endDate && !canceled, "can not collect payment before the event is over");
         //owner.transfer(address(this).balance);
         selfdestruct(msg.sender);
        emit PaymentCollected(address(this), msg.sender, address(this).balance );

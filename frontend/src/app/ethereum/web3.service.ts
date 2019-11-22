@@ -60,8 +60,4 @@ export class Web3Service {
       this.selectedAccount$.next(this.account);
     });
   }
-
-  subscribeToAccountChange() {
-    this.selectedAccount$.subscribe((a: string) => (this.account = a));
-  }
 }
