@@ -18,10 +18,16 @@ contract EventFactory {
         @param location location of the event
         @return emits eveneCreated log
         */
+    bool private halted;
+    address private owner;
+
     Event[] public deployedEvents;
     event eventCreated(Event _address, string _name, uint _ticketPrice, string location, uint startDate, uint endDate, string indexed _filterName, string indexed _filterLocation);
-    
+
+
+
     function createEvent(string memory  _name, uint _start, uint _end,  uint supply, uint _ticketPrice, string memory _description, string memory _location) public  {
+        require(!halted);
         address payable sender = msg.sender;
         Event newEvent = new Event(sender, _name, _start, _end,_description, _location, supply, _ticketPrice );
         deployedEvents.push(newEvent);
@@ -35,5 +41,13 @@ contract EventFactory {
    function getDeployedEvents() public view returns(Event[] memory) {
         return deployedEvents;
     }
+
+
+
+    modifier onlyOwner {
+        require(msg.sender == owner, "only the owner can perform this task");
+        _;
+    }
+    
     
 }
