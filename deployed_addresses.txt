@@ -1,0 +1,3 @@
+Contract address: 0x1fD9C9c9bce4E2EA3B9d14d3faF73759F910F823 .
+network: rinkeby
+truffle migration script: truffle migrate -f 3 --network rinkeby --reset
