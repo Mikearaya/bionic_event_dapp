@@ -70,7 +70,7 @@ on the root directory of the project run
 
 # Use Cases / User Stories.
 
-1. Event organizer created event.
+1. **Event organizer created event.**
 
 - clicks on create event button which will direct him/her to the event creation page.
 - user fills required fields about the event (event name, description, location, total available tickets, ticket price in ether, start &amp; end dates)
@@ -78,21 +78,21 @@ on the root directory of the project run
 - metamask modal will popup and prompt the user to confirm the transaction and pay the required gas fees.
 - after the user confirms the metamask dialog, Event is created and ready to sell tickets.
 
-2. Organizer decides to change the event image
+2. **Organizer decides to change the event image**
 
 - organizer goes to the event detail page and clicks on the choose file button.
 - organizer selects the image they want to change with.
 - metamask will popup and prompt the user to confirm the transaction by paying the required gas fees.
 - after the user confirms the transaction the image will be successfuly changed.
 
-3. Event attendee purchase single ticket.
+3. **Event attendee purchase single ticket.**
 
 - attendee clicks on the event which will redirect him/her to the event detail page.
 - attendee enteres the total amount of ticket he/she requires in this case which is one and clicks o the get ticket button.
 - metamask modal will popup and prompt the user to confirm the transaction and pay for the gas and ticket price.
 - after confirming and completing the payment the attendee will aquire the ticket for the event.
 
-4. Event attendee purchases ticket and deciedes to transfer some or all of it to other person.
+4. **Event attendee purchases ticket and deciedes to transfer some or all of it to other person.**
 
 - attendee clicks on the event box and get redirected to the event detail page.
 - attendee will enter the required amount of ticket he/she want to purchase.
@@ -103,14 +103,14 @@ on the root directory of the project run
 - metamask popup will prompt the user to confirm the transaction.
 - after confirming the user will no longer poses the ticket.
 
-5. Event organizer cancels the event.
+5. **Event organizer cancels the event.**
 
 - after creating the event organizer decieded to cancel the event.
 - organizer goes to the event detail page and click cancel event button.
 - metamask will prompt the user to confirm the transaction.
 - after confirming the transaction the event will be canceled successfuly.
 
-6. Event attendees get refunded there ether for canceled events.
+6. **Event attendees get refunded there ether for canceled events.**
 
 - if event organizer decieded to cancel the event attendee will be able refunded of there ether by going to the event detail page.
 - user goes to the bottom of the event detail page to find all the tickets purchased by them.
@@ -118,7 +118,7 @@ on the root directory of the project run
 - metamask will popup and prompt the user to confirm the transaction by paying the required gas fee.
 - after the user confirms the amount equal to the ticket price will be refunded to them.
 
-7. Organizer collect payment after the event have completed.
+7. **Organizer collect payment after the event have completed.**
 
 - organizer goes to the event page after the event has completed.
 - organizer clicks on the collect payment payment button.
