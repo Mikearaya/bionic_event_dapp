@@ -38,11 +38,15 @@ export class Web3Service {
     this.setAccount();
   }
 
-  setAccount(): void {
+  async setAccount(): Promise<void> {
     this.web3.currentProvider.publicConfigStore.on("update", a => {
       this.selectedAccount$.next(a.selectedAddress);
       this.account = a.selectedAddress;
     });
+
+    if (window.ethereum.isMetaMask) {
+      await ethereum.enable();
+    }
     this.web3.eth.getAccounts((err, accs) => {
       if (err != null) {
         alert("There was an error fetching your accounts.");
