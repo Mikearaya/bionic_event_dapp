@@ -10,6 +10,8 @@ event ticket buying &amp; selling DApp built for ethereum using solidity as back
 6. organizers can cancel events they have created.
 7. search for events available.
 
+[Demo Video](https://youtu.be/yZP8OPDuKrI)
+
 ## Development Tools.
 
 the project is developed using different technologies.
