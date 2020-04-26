@@ -2,3 +2,4 @@
 *.jsx eol=lf
 *.json eol=lf
 *.sol eol=lf
+*.sol linguist-language=Solidity
