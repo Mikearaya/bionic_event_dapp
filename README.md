@@ -10,6 +10,8 @@ event ticket buying &amp; selling DApp built for ethereum using solidity as back
 6. organizers can cancel events they have created.
 7. search for events available.
 
+[Demo Video](https://youtu.be/yZP8OPDuKrI)
+
 ## Development Tools.
 
 the project is developed using different technologies.
@@ -36,12 +38,10 @@ finally we need ethereum client to connect to the ethereum network, for that ins
 after completeing the above the enviroment requirment for the user interface has been met. next is setting up the enviroment for the backend/api.
 
 2. Backen / API requirement.
-   in order to use the backend there are few applications that need to be installing.
-   for local ethereum network simulation the app uses **ganache** follow the following link to install ganache on your workspace [ganache](https://www.trufflesuite.com/ganache).
+   in order to use the backend there are few applications that need to be installing. first make sure you have **web3** installed globaly by runnig `npm install -g web3` then for local ethereum network simulation the app uses **ganache** follow the following link to install ganache on your workspace [ganache](https://www.trufflesuite.com/ganache).
    the next step is to install truffle framework used for writing smart contract.
    execute the following line of code to install truffle on your global enviroment.
-   `npm install -g truffle`
-   for more information on how to setup truffle visit [truffle](https://www.trufflesuite.com/docs/truffle/getting-started/installation).
+   `npm install -g truffle` for more information on how to setup truffle visit [truffle](https://www.trufflesuite.com/docs/truffle/getting-started/installation) also include **truffle hdwallet provider** by running `npm install @truffle/hdwallet-provider`. 
    finally we need to install **solidity compiler v5<=** run the following code to install solidity
    `npm install -g solc`
    for more information follow [solidity](https://www.trufflesuite.com/docs/truffle/getting-started/installation) to install solidity compiler on your workspace.
