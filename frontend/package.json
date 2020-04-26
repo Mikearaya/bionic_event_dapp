@@ -29,6 +29,7 @@
     "rxjs": "~6.3.3",
     "truffle-contract": "^4.0.31",
     "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^1.2.4",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
@@ -62,6 +63,7 @@
     "https": false,
     "tls": false,
     "os": false,
-    "scrypt-shim": false
+    "scrypt-shim": false,
+    "fs-constants": false
   }
 }

@@ -45,8 +45,9 @@ export class Web3Service {
     });
 
     if (window.ethereum.isMetaMask) {
-      await ethereum.enable();
+      await ethereum.enable()
     }
+
     this.web3.eth.getAccounts((err, accs) => {
       if (err != null) {
         alert("There was an error fetching your accounts.");
