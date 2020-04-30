@@ -24,7 +24,7 @@
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "ipfs-http-client": "^39.0.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.16.0",
     "rxjs": "~6.3.3",
     "truffle-contract": "^4.0.31",
